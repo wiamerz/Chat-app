@@ -58,7 +58,7 @@ const LoginForm = () => {
         Alert.alert("Connexion réussie");
 
         setTimeout(() => {
-          navigation.navigate('Home');
+          navigation.navigate('-');
         }, 2000);
       }
     } catch (error) {
@@ -93,7 +93,7 @@ const LoginForm = () => {
         onPress={handleSubmit}
         disabled={loading}
       >
-        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Se connecter</Text>}
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Connecter</Text>}
       </TouchableOpacity>
     </ScrollView>
   );
