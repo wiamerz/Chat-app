@@ -74,8 +74,7 @@ const RegisterForm = () => {
         const response = await axios.post('http://127.0.0.1:3000/api/auth/register', formData);
 
         if (response.status === 201) {
-          Alert.alert('Succès', 'Inscription réussie ! Vérifiez votre email pour continuer.');
-          navigation.navigate('Verification', { email: formData.email });
+          Alert.alert('Succès', 'Inscription réussie.');
         } else {
           Alert.alert('Erreur', response.data.message || 'Une erreur est survenue');
         }
