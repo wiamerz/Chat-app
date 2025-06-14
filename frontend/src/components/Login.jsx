@@ -41,32 +41,35 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    setLoading(true);
-    try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', formData, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+  setLoading(true);
+  try {
+    const response = await axios.post('http://192.168.11.107:3000/api/auth/login', formData, {
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-      if (response.data.token) {
-        const { token, user } = response.data;
+    if (response.data.token) {
+      const { token, user } = response.data;
 
-        await AsyncStorage.setItem('token', token);
-        await AsyncStorage.setItem('user', JSON.stringify(user));
+      await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('user', JSON.stringify(user));
 
-        Alert.alert("Connexion réussie");
+      Alert.alert("Connexion réussie");
 
-        setTimeout(() => {
-          navigation.navigate('-');
-        }, 2000);
-      }
-    } catch (error) {
-      setApiError(error.response?.data?.message || 'Erreur lors de la connexion');
-    } finally {
-      setLoading(false);
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 2000);
+    } else {
+      setApiError("Réponse inattendue du serveur");
     }
-  };
+  } catch (error) {
+    setApiError(error.response?.data?.message || 'Erreur lors de la connexion');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -11,7 +11,6 @@ const RegisterForm = () => {
     password: '',
     confirmPassword: '',
     number: '',
-    role: '',
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -71,10 +70,11 @@ const RegisterForm = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post('http://127.0.0.1:3000/api/auth/register', formData);
+      const response = await axios.post('http://192.168.11.107:3000/api/auth/register', formData);
 
         if (response.status === 201) {
           Alert.alert('Succès', 'Inscription réussie.');
+          navigation.navigate('Login');
         } else {
           Alert.alert('Erreur', response.data.message || 'Une erreur est survenue');
         }
