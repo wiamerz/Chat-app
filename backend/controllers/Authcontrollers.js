@@ -34,6 +34,16 @@ const register = async (req, res) => {
     console.log('User object before saving:', user);
     await user.save();
     
+
+     res.status(201).json({ 
+      message: 'Utilisateur créé avec succès',
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        number: user.number
+      }
+    });
   } catch (error) {
     console.error('Erreur serveur:', error);
     res.status(500).json({ message: 'Erreur serveur, veuillez réessayer plus tard' });
@@ -45,34 +55,34 @@ const register = async (req, res) => {
 
 
 
-// Edit profile route 
-const editProfile = async (req, res) => {
-  try {
-    const { userId, username, email, number } = req.body;
+// // Edit profile route 
+// const editProfile = async (req, res) => {
+//   try {
+//     const { userId, username, email, number } = req.body;
     
-    if (!userId || !username || !email || !number) {
-      return res.status(400).json({ message: 'Tous les champs sont requis' });
-    }
+//     if (!userId || !username || !email || !number) {
+//       return res.status(400).json({ message: 'Tous les champs sont requis' });
+//     }
     
-    // Vérifier que l'utilisateur existe
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'Utilisateur non trouvé' });
-    }
+//     // Vérifier que l'utilisateur existe
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ message: 'Utilisateur non trouvé' });
+//     }
     
-    // Vérifier si l'email a changé et s'il n'est pas déjà utilisé par un autre utilisateur
-    if (email !== user.email) {
-      const existingUser = await User.findOne({ email });
-      if (existingUser && existingUser._id.toString() !== userId) {
-        return res.status(400).json({ message: 'Cet email est déjà utilisé par un autre compte' });
-      }
-    }
+//     // Vérifier si l'email a changé et s'il n'est pas déjà utilisé par un autre utilisateur
+//     if (email !== user.email) {
+//       const existingUser = await User.findOne({ email });
+//       if (existingUser && existingUser._id.toString() !== userId) {
+//         return res.status(400).json({ message: 'Cet email est déjà utilisé par un autre compte' });
+//       }
+//     }
     
-  } catch (error) {
-    console.error('Erreur lors de la mise à jour du profil:', error);
-    res.status(500).json({ message: 'Erreur serveur, veuillez réessayer plus tard' });
-  }
-};
+//   } catch (error) {
+//     console.error('Erreur lors de la mise à jour du profil:', error);
+//     res.status(500).json({ message: 'Erreur serveur, veuillez réessayer plus tard' });
+//   }
+// };
 
 
 
@@ -115,4 +125,4 @@ const login = async (req, res) => {
 
 
 
-module.exports = { register, login, editProfile};
+module.exports = { register, login};
